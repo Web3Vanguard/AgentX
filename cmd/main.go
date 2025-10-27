@@ -2,48 +2,35 @@ package main
 
 import (
 	"log"
-	"os"
-	"fmt"
 	"github.com/jieliu2000/anyi"
-	"github.com/jieliu2000/anyi/llm/openai"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-
 	err := godotenv.Load()
 
-	
-	fmt.Println(os.Getenv("OPENAI_API_KEY"))
-	// Create client
-	config := openai.DefaultConfig("gpt-4")
-	config.APIKey = os.Getenv("OPENAI_API_KEY")
-	client, err := anyi.NewClient("gpt4", config)
 	if err != nil {
-		log.Fatalf("Failed to create client: %v", err)
+		log.Fatalf("Environment variables cannot be loaded: %v", err)
 	}
 
-	// Create a two-step workflow
-	step1, _ := anyi.NewLLMStepWithTemplate(
-		"Generate a short story about {{.Text}}",
-		"You are a creative fiction writer.",
-		client,
-	)
-	step1.Name = "story_generation"
 
-	step2, _ := anyi.NewLLMStepWithTemplate(
-		"Create an engaging title for the following story:\n\n{{.Text}}",
-		"You are an editor skilled at creating titles.",
-		client,
-	)
-	step2.Name = "title_creation"
+	err = anyi.ConfigFromFile("./config.yaml")
 
-	// Create and register the flow
-	myFlow, _ := anyi.NewFlow("story_flow", client, *step1, *step2)
-	anyi.RegisterFlow("story_flow", myFlow)
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
 
-	// Run the workflow
-	result, _ := myFlow.RunWithInput("a detective in future London")
+	flow, err := anyi.GetFlow("agentic_flow")
+	if err != nil {
+		log.Fatalf("Failed to get flow: %v", err)
+	}
 
-	log.Printf("Title: %s", result.Text)
+	result, err := flow.RunWithInput("Interact with the somnia blockchain especially with smart contract")
+
+	if err != nil {
+		log.Fatalf("Floe execution failed: %v", err)
+	}
+
+
+	log.Printf("Result: %s", result.Text)
 }

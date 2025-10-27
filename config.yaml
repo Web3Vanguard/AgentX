@@ -1,0 +1,21 @@
+clients:
+  - name: "gpt4"
+    type: "openai"
+    config:
+      model: "gpt-4"
+      apiKey: "$OPENAI_API_KEY"
+      temperature: 0.7
+      maxTokens: 2000
+flows:
+  - name: "agentic_flow"
+    clientName: "gpt4" # Default client for the flow
+    steps:
+      - name: "somnia blockchain interaction"
+        executor:
+          type: "llm"
+          withconfig:
+            template: "Interact with the blockchain using these rpc url https://rpc.ankr.com/somnia_testnet"
+            systemMessage: "Fetch any network detail from the somnia blockchain."
+        maxRetryTimes: 2
+
+      
