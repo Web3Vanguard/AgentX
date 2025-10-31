@@ -4,22 +4,31 @@ import (
 	// "log"
 	// "github.com/jieliu2000/anyi"
 	// "github.com/joho/godotenv"
+	// "context"
+	// "fmt"
+	// "log"
+
 	"fmt"
 	"log"
 
+	// "github.com/jieliu2000/anyi"
 	"github.com/shaaibu7/AgentX/executors"
 )
 
 
 func main() {
+	getBlockContext := &executors.GetBlockNumberExecutor{}
 
-	blockNumber, err := executors.GetBlockNumber()
+	// context := anyi.NewFlowContext("What is the current block number", "no need to remember anything..")
+	context := executors.FlowContext{}
+
+	result, err := getBlockContext.Execute(&context)
 
 	if err != nil {
-		log.Printf("Error to get block number: %v", err)
+		log.Fatal("Execution failed: %v", err)
 	}
 
-	fmt.Println(blockNumber)
+	fmt.Printf("Result: %s\n", result.Text)
 	// err := godotenv.Load()
 
 	// if err != nil {

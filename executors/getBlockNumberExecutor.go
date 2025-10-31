@@ -11,7 +11,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func GetBlockNumber() (int64, error){
+type GetBlockNumberExecutor struct {}
+
+func (e *GetBlockNumberExecutor) Execute(context *FlowContext) (*FlowContext, error) {
 	err := godotenv.Load()
 
 	rpc_url := os.Getenv("SOMNIA_RPC_URL")
@@ -57,14 +59,28 @@ func GetBlockNumber() (int64, error){
 		blockHexNumber := result["result"].(string)
 
 		var blockNumber int64 
-		fmt.Sscanf(blockHexNumber, "0x%x", &blockNumber)
+		_, err := fmt.Sscanf(blockHexNumber, "0x%x", &blockNumber)
 
+		if err != nil {
+			log.Fatal("Error in number conversion to hex.")
+		}
 		fmt.Println("the block number is:  ", blockNumber)
 
-		return blockNumber, nil
+		resultText := fmt.Sprintf("The current block number is %d", blockNumber)
+		fmt.Println(resultText)
+
+		newContext := FlowContext{
+			Text: resultText,
+			Memory: context.Memory,
+			Think: context.Think,
+			ImageURLs: context.ImageURLs,
+			Flow: context.Flow,
+			Variables: context.Variables,
+		}
+
+		return &newContext, nil
 	}
 
-	return 0, err
-
+	return nil, err
 }
 
