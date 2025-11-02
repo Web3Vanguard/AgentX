@@ -69,13 +69,10 @@ func (e *GetGasPriceExecutor) Execute(context *flow.FlowContext) (*flow.FlowCont
 
 		_, err := fmt.Sscanf(gasPriceData, "0x%x", &gasPrice)
 
-		fmt.Println(gasPrice)
-
 		if err != nil {
 			log.Fatal("Error in number conversion to from hex.")
 		}
 
-		fmt.Println("The current gasprice is: ", gasPrice)
 
 		resultText := fmt.Sprintf("The current gasprice is %d", gasPrice)
 
@@ -94,4 +91,22 @@ func (e *GetGasPriceExecutor) Execute(context *flow.FlowContext) (*flow.FlowCont
 	}
 
 	return nil, err
+}
+
+func (s *GetGasPriceStepWrapper) Init() error {
+	return nil
+}
+
+func (s *GetGasPriceStepWrapper) Run(flowContext flow.FlowContext, Step *flow.Step) (*flow.FlowContext, error) {
+	getGasPriceExecutor := GetGasPriceExecutor{};
+	context := flow.NewFlowContext("get_current_gas_price", "somnia blockchain interaction");
+	newFlowContext, err := getGasPriceExecutor.Execute(context)
+	if err != nil {
+		return nil, err
+	}
+	return newFlowContext, nil
+}
+
+func NewGetGasPriceStepWrapper() *GetGasPriceStepWrapper {
+	return &GetGasPriceStepWrapper{}
 }

@@ -24,5 +24,15 @@ flows:
             template: "Fetch blockchain data like current block number from the somnia network"
             systemMessage: "Fetch current block number from the somnia blockchain."
         maxRetryTimes: 2
+  - name: "agentic_flow_price"
+    clientName: "gpt4" # Default client for the flow
+    steps:
+      - name: "get_current_gas_price"
+        executor:
+          type: "get_current_gas_price"
+          withconfig:
+            template: "Fetch blockchain data like current gas price from the somnia network"
+            systemMessage: "Fetch current gas price from the somnia blockchain."
+        maxRetryTimes: 2
 
       

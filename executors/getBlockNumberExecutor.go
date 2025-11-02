@@ -56,8 +56,6 @@ func (e *GetBlockNumberExecutor) Execute(context *flow.FlowContext) (*flow.FlowC
 		log.Fatal("Error parsing JSON:", err)
 	}
 
-	// fmt.Println("Raw JSON response", string(body), result["result"])
-
 	if result["result"] != nil {
 		blockHexNumber := result["result"].(string)
 
@@ -67,10 +65,8 @@ func (e *GetBlockNumberExecutor) Execute(context *flow.FlowContext) (*flow.FlowC
 		if err != nil {
 			log.Fatal("Error in number conversion to hex.")
 		}
-		fmt.Println("the block number is:  ", blockNumber)
 
 		resultText := fmt.Sprintf("The current block number is %d", blockNumber)
-		fmt.Println(resultText)
 
 		newContext := flow.FlowContext{
 			Text: resultText,
