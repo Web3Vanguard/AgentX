@@ -21,13 +21,17 @@ import (
 
 func init() {
 	blockStepWrapper := executors.NewGetBlockStepWrapper()
-	gasPricestepWrapper := executors.NewGetGasPriceStepWrapper()
+	gasPriceStepWrapper := executors.NewGetGasPriceStepWrapper()
+	chainIdStepWrapper := executors.NewGetChainIdStepWrapper()
 
 
 
 	anyi.RegisterExecutor("get_current_block_number", blockStepWrapper)
 
-	anyi.RegisterExecutor("get_current_gas_price", gasPricestepWrapper)
+	anyi.RegisterExecutor("get_current_gas_price", gasPriceStepWrapper)
+
+	anyi.RegisterExecutor("get_chain_id", chainIdStepWrapper)
+
 
 
 }
@@ -82,6 +86,24 @@ func main() {
 
 
 	result, err = flow.RunWithInput("Fetch the current gas price of the somnia blockchain")
+
+	if err != nil {
+		log.Fatalf("Flow execution failed: %v", err)
+	}
+
+
+	log.Printf("Result: %s", result.Text)
+
+
+	fmt.Println("Still processing....")
+
+	flow, err = anyi.GetFlow("agentic_flow_chain_id")
+	if err != nil {
+		log.Fatalf("Failed to get flow: %v", err)
+	}
+
+
+	result, err = flow.RunWithInput("Fetch the chain id of the somnia blockchain")
 
 	if err != nil {
 		log.Fatalf("Flow execution failed: %v", err)
