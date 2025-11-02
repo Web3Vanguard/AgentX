@@ -14,6 +14,8 @@ import (
 
 type GetBlockNumberExecutor struct {}
 
+type GetBlockStepWrapper struct {}
+
 func (e *GetBlockNumberExecutor) Execute(context *flow.FlowContext) (*flow.FlowContext, error) {
 	err := godotenv.Load()
 
@@ -85,3 +87,22 @@ func (e *GetBlockNumberExecutor) Execute(context *flow.FlowContext) (*flow.FlowC
 	return nil, err
 }
 
+
+
+func (s *GetBlockStepWrapper) Init() error {
+	return nil
+}
+
+func (s *GetBlockStepWrapper) Run(flowContext flow.FlowContext, Step *flow.Step) (*flow.FlowContext, error) {
+	getBlockExecutor := GetBlockNumberExecutor{};
+	context := flow.NewFlowContext("get_current_block_number", "somnia blockchain interaction");
+	newFlowContext, err := getBlockExecutor.Execute(context)
+	if err != nil {
+		return nil, err
+	}
+	return newFlowContext, nil
+}
+
+func NewGetBlockStepWrapper() *GetBlockStepWrapper {
+	return &GetBlockStepWrapper{}
+}
