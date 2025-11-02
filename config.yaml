@@ -17,5 +17,12 @@ flows:
             template: "Interact with the blockchain using these rpc url https://rpc.ankr.com/somnia_testnet"
             systemMessage: "Fetch any network detail from the somnia blockchain."
         maxRetryTimes: 2
+      - name: "get_current_block_number"
+        executor:
+          type: "get_current_block_number"
+          withconfig:
+            template: "Fetch blockchain data like current block number from the somnia network"
+            systemMessage: "Fetch current block number from the somnia blockchain."
+        maxRetryTimes: 2
 
       

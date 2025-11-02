@@ -9,11 +9,12 @@ import (
 	"net/http"
 	"os"
 	"github.com/joho/godotenv"
+	"github.com/jieliu2000/anyi/flow"
 )
 
 type GetBlockNumberExecutor struct {}
 
-func (e *GetBlockNumberExecutor) Execute(context *FlowContext) (*FlowContext, error) {
+func (e *GetBlockNumberExecutor) Execute(context *flow.FlowContext) (*flow.FlowContext, error) {
 	err := godotenv.Load()
 
 	rpc_url := os.Getenv("SOMNIA_RPC_URL")
@@ -69,7 +70,7 @@ func (e *GetBlockNumberExecutor) Execute(context *FlowContext) (*FlowContext, er
 		resultText := fmt.Sprintf("The current block number is %d", blockNumber)
 		fmt.Println(resultText)
 
-		newContext := FlowContext{
+		newContext := flow.FlowContext{
 			Text: resultText,
 			Memory: context.Memory,
 			Think: context.Think,
