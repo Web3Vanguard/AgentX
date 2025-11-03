@@ -4,18 +4,22 @@ import (
 	"context"
 	"crypto/ecdsa"
 	"fmt"
-	"log"
-	"math/big"
-	"github.com/joho/godotenv"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/jieliu2000/anyi/flow"
+	"github.com/joho/godotenv"
+	"github.com/shaaibu7/AgentX/bindings"
+	"log"
+	"math/big"
 	"os"
-	"github.com/shaaibu7/AgentX/bindings" // Replace with your module path
 )
 
-func DeployERC20() {
+type DeployERC20TokenExecutor struct{}
 
+type DeployERC20TokenStepWrapper struct{}
+
+func (e *DeployERC20TokenExecutor) Execute(ctx *flow.FlowContext) (*flow.FlowContext, error) {
 	err := godotenv.Load()
 
 	if err != nil {
@@ -25,7 +29,6 @@ func DeployERC20() {
 	rpc_url := os.Getenv("SOMNIA_RPC_URL")
 	private_key := os.Getenv("PRIVATE_KEY")
 
-	fmt.Println(rpc_url, private_key)
 
 	// Connect to an Ethereum node
 	client, err := ethclient.Dial(rpc_url)
@@ -72,7 +75,7 @@ func DeployERC20() {
 		log.Fatal("keyed tx error", err)
 	}
 	auth.Nonce = big.NewInt(int64(nonce))
-	auth.Value = big.NewInt(0)        // no ETH sent with the contract
+	auth.Value = big.NewInt(0) // no ETH sent with the contract
 	// auth.GasLimit = uint64(30000000000)   // Gas limit
 	auth.GasPrice = gasPrice
 
@@ -87,10 +90,43 @@ func DeployERC20() {
 
 	// Wait for mining
 	receipt, err := bind.WaitMined(context.Background(), client, tx)
-	fmt.Println("The reciept status is:", receipt)
 	if err != nil {
 		log.Fatalf("Failed to get tx receipt: %v", err)
 	}
 
-	fmt.Println("Tx reciept: ", receipt)
+	if receipt.Status == 1 {
+		resultText := fmt.Sprintf("The deployed contract address is and the txHash is %s %s", address.Hex(), tx.Hash().Hex())
+
+		newContext := flow.FlowContext{
+			Text:      resultText,
+			Memory:    ctx.Memory,
+			Think:     ctx.Think,
+			ImageURLs: ctx.ImageURLs,
+			Flow:      ctx.Flow,
+			Variables: ctx.Variables,
+		}
+
+		return &newContext, nil
+	}
+
+	return nil, err
+
+}
+
+func (s *DeployERC20TokenStepWrapper) Init() error {
+	return nil
+}
+
+func (s *DeployERC20TokenStepWrapper) Run(flowContext flow.FlowContext, Step *flow.Step) (*flow.FlowContext, error) {
+	deployERC20TokenExecutor := DeployERC20TokenExecutor{};
+	context := flow.NewFlowContext("deploy_erc20_token", "somnia blockchain interaction");
+	newFlowContext, err := deployERC20TokenExecutor.Execute(context)
+	if err != nil {
+		return nil, err
+	}
+	return newFlowContext, nil
+}
+
+func NewDeployERC20TokenStepWrapper() *DeployERC20TokenStepWrapper {
+	return &DeployERC20TokenStepWrapper{}
 }

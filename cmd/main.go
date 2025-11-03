@@ -5,12 +5,12 @@ import (
 	// "github.com/jieliu2000/anyi"
 	// "fmt"
 
-	// "github.com/joho/godotenv"
+	"github.com/joho/godotenv"
 	// "context"
-	// "fmt"
+	"fmt"
 	// "log"
 
-	// "log"
+	"log"
 
 	"github.com/jieliu2000/anyi"
 	"github.com/shaaibu7/AgentX/executors"
@@ -23,6 +23,7 @@ func init() {
 	blockStepWrapper := executors.NewGetBlockStepWrapper()
 	gasPriceStepWrapper := executors.NewGetGasPriceStepWrapper()
 	chainIdStepWrapper := executors.NewGetChainIdStepWrapper()
+	deployERC20TokenWrapper := executors.NewDeployERC20TokenStepWrapper()
 
 
 
@@ -31,6 +32,8 @@ func init() {
 	anyi.RegisterExecutor("get_current_gas_price", gasPriceStepWrapper)
 
 	anyi.RegisterExecutor("get_chain_id", chainIdStepWrapper)
+
+	anyi.RegisterExecutor("deploy_erc20_token", deployERC20TokenWrapper)
 
 
 
@@ -50,67 +53,84 @@ func main() {
 	// }
 
 	// fmt.Printf("Result: %s\n", result.Text)
-	// err := godotenv.Load()
+	err := godotenv.Load()
 
-	// if err != nil {
-	// 	log.Fatalf("Environment variables cannot be loaded: %v", err)
-	// }
-
-
-	// err = anyi.ConfigFromFile("./config.yaml")
-
-	// if err != nil {
-	// 	log.Fatalf("Failed to load config: %v", err)
-	// }
-
-	// flow, err := anyi.GetFlow("agentic_flow")
-	// if err != nil {
-	// 	log.Fatalf("Failed to get flow: %v", err)
-	// }
-
-	// result, err := flow.RunWithInput("Fetch the current block number of the somnia blockchain")
-
-	// if err != nil {
-	// 	log.Fatalf("Flow execution failed: %v", err)
-	// }
+	if err != nil {
+		log.Fatalf("Environment variables cannot be loaded: %v", err)
+	}
 
 
-	// log.Printf("Result: %s", result.Text)
+	err = anyi.ConfigFromFile("./config.yaml")
 
-	// fmt.Println("Still processing....")
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
 
-	// flow, err = anyi.GetFlow("agentic_flow_price")
-	// if err != nil {
-	// 	log.Fatalf("Failed to get flow: %v", err)
-	// }
+	flow, err := anyi.GetFlow("agentic_flow")
+	if err != nil {
+		log.Fatalf("Failed to get flow: %v", err)
+	}
 
+	result, err := flow.RunWithInput("Fetch the current block number of the somnia blockchain")
 
-	// result, err = flow.RunWithInput("Fetch the current gas price of the somnia blockchain")
-
-	// if err != nil {
-	// 	log.Fatalf("Flow execution failed: %v", err)
-	// }
-
-
-	// log.Printf("Result: %s", result.Text)
+	if err != nil {
+		log.Fatalf("Flow execution failed: %v", err)
+	}
 
 
-	// fmt.Println("Still processing....")
+	log.Printf("Result: %s", result.Text)
 
-	// flow, err = anyi.GetFlow("agentic_flow_chain_id")
-	// if err != nil {
-	// 	log.Fatalf("Failed to get flow: %v", err)
-	// }
+	fmt.Println("Still processing....")
 
-
-	// result, err = flow.RunWithInput("Fetch the chain id of the somnia blockchain")
-
-	// if err != nil {
-	// 	log.Fatalf("Flow execution failed: %v", err)
-	// }
+	flow, err = anyi.GetFlow("agentic_flow_price")
+	if err != nil {
+		log.Fatalf("Failed to get flow: %v", err)
+	}
 
 
-	// log.Printf("Result: %s", result.Text)
+	result, err = flow.RunWithInput("Fetch the current gas price of the somnia blockchain")
 
-	executors.DeployERC20()
+	if err != nil {
+		log.Fatalf("Flow execution failed: %v", err)
+	}
+
+
+	log.Printf("Result: %s", result.Text)
+
+
+	fmt.Println("Still processing....")
+
+	flow, err = anyi.GetFlow("agentic_flow_chain_id")
+	if err != nil {
+		log.Fatalf("Failed to get flow: %v", err)
+	}
+
+
+	result, err = flow.RunWithInput("Fetch the chain id of the somnia blockchain")
+
+	if err != nil {
+		log.Fatalf("Flow execution failed: %v", err)
+	}
+
+
+	log.Printf("Result: %s", result.Text)
+
+	fmt.Println("Still processing....")
+
+	flow, err = anyi.GetFlow("agentic_flow_deploy_erc20")
+	if err != nil {
+		log.Fatalf("Failed to get flow: %v", err)
+	}
+
+
+	result, err = flow.RunWithInput("Deploy an ERC20 token on the somnia blockchain")
+
+	if err != nil {
+		log.Fatalf("Flow execution failed: %v", err)
+	}
+
+
+	log.Printf("Result: %s", result.Text)
+
+
 }

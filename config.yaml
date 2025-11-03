@@ -44,5 +44,15 @@ flows:
             template: "Fetch blockchain data like chain id from the somnia network"
             systemMessage: "Fetch chain id from the somnia blockchain."
         maxRetryTimes: 2
+  - name: "agentic_flow_deploy_erc20"
+    clientName: "gpt4" # Default client for the flow
+    steps:
+      - name: "deploy_erc20_token"
+        executor:
+          type: "deploy_erc20_token"
+          withconfig:
+            template: "Deploy an ERC20 contract on the somnia network"
+            systemMessage: "deploy an ERC20 token on the somnia blockchain."
+        maxRetryTimes: 2
 
       
