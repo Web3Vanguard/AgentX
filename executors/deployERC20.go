@@ -37,7 +37,6 @@ func (e *DeployERC20TokenExecutor) Execute(ctx *flow.FlowContext) (*flow.FlowCon
 	}
 	defer client.Close()
 
-	// Load your private key
 	privateKey, err := crypto.HexToECDSA(private_key)
 	if err != nil {
 		log.Fatal(err)
