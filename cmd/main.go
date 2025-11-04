@@ -53,7 +53,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Environment variables cannot be loaded: %v", err)
 	}
-	
+
 	flag.Parse()
 	configFilePath := "./" + *configPath
 
@@ -69,7 +69,22 @@ func main() {
 		log.Fatalf("Failed to get flow: %v", err)
 	}
 
-	result, err := flow.RunWithInput("Fetch the current block number of the somnia blockchain")
+	result, err := flow.RunWithInput("AI agent interaction without external interactions...")
+
+	if err != nil {
+		log.Fatalf("Flow execution failed: %v", err)
+	} 
+
+	log.Printf("Result: %s", result.Text)
+
+	fmt.Println("Still processing....")
+
+	flow, err = anyi.GetFlow("agentic_flow_get_block_number")
+	if err != nil {
+		log.Fatalf("Failed to get flow: %v", err)
+	}
+
+	result, err = flow.RunWithInput("Fetch the current block number of the somnia blockchain")
 
 	if err != nil {
 		log.Fatalf("Flow execution failed: %v", err)

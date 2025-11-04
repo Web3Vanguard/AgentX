@@ -17,6 +17,9 @@ flows:
             template: "Interact with the somnia blockchain through custom executors"
             systemMessage: "You are an autonomous AI agent that can interact with the somnia blockchain through custom executors."
         maxRetryTimes: 2
+  - name: "agentic_flow_get_block_number"
+    clientName: "gpt4" # Default client for the flow
+    steps:
       - name: "get_current_block_number"
         executor:
           type: "get_current_block_number"
