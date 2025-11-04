@@ -32,7 +32,7 @@ func init() {
 }
 
 func main() {
-	configPath := flag.String("name", "./config.yaml", "config path string")
+	configPath := flag.String("config-file", "./config.yaml", "config path string")
 	envPath := flag.String("env", ".env", "Path to environment variables")
 
 	err := godotenv.Load(*envPath)
