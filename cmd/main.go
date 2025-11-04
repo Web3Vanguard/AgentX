@@ -24,6 +24,8 @@ func init() {
 	gasPriceStepWrapper := executors.NewGetGasPriceStepWrapper()
 	chainIdStepWrapper := executors.NewGetChainIdStepWrapper()
 	deployERC20TokenWrapper := executors.NewDeployERC20TokenStepWrapper()
+	deployNFTTokenWrapper := executors.NewDeployNFTTokenStepWrapper()
+
 
 
 
@@ -34,6 +36,8 @@ func init() {
 	anyi.RegisterExecutor("get_chain_id", chainIdStepWrapper)
 
 	anyi.RegisterExecutor("deploy_erc20_token", deployERC20TokenWrapper)
+
+	anyi.RegisterExecutor("deploy_nft_token", deployNFTTokenWrapper)
 
 
 
@@ -115,6 +119,7 @@ func main() {
 
 	log.Printf("Result: %s", result.Text)
 
+
 	fmt.Println("Still processing....")
 
 	flow, err = anyi.GetFlow("agentic_flow_deploy_erc20")
@@ -124,6 +129,24 @@ func main() {
 
 
 	result, err = flow.RunWithInput("Deploy an ERC20 token on the somnia blockchain")
+
+	if err != nil {
+		log.Fatalf("Flow execution failed: %v", err)
+	}
+
+
+	log.Printf("Result: %s", result.Text)
+
+
+	fmt.Println("Still processing....")
+
+	flow, err = anyi.GetFlow("agentic_flow_deploy_nft")
+	if err != nil {
+		log.Fatalf("Failed to get flow: %v", err)
+	}
+
+
+	result, err = flow.RunWithInput("Deploy an NFT token on the somnia blockchain")
 
 	if err != nil {
 		log.Fatalf("Flow execution failed: %v", err)

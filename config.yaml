@@ -54,5 +54,15 @@ flows:
             template: "Deploy an ERC20 contract on the somnia network"
             systemMessage: "deploy an ERC20 token on the somnia blockchain."
         maxRetryTimes: 2
+  - name: "agentic_flow_deploy_nft"
+    clientName: "gpt4" # Default client for the flow
+    steps:
+      - name: "deploy_nft_token"
+        executor:
+          type: "deploy_nft_token"
+          withconfig:
+            template: "Deploy an NFT contract on the somnia network"
+            systemMessage: "deploy an NFT token on the somnia blockchain."
+        maxRetryTimes: 2
 
       
