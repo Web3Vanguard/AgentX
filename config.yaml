@@ -7,16 +7,7 @@ clients:
       temperature: 0.7
       maxTokens: 2000
 flows:
-  - name: "agentic_flow"
-    clientName: "gpt4" # Default client for the flow
-    steps:
-      - name: "somnia blockchain interaction"
-        executor:
-          type: "llm"
-          withconfig:
-            template: "Interact with the somnia blockchain through custom executors"
-            systemMessage: "You are an autonomous AI agent that can interact with the somnia blockchain through custom executors."
-        maxRetryTimes: 2
+  
   - name: "agentic_flow_get_block_number"
     clientName: "gpt4" # Default client for the flow
     steps:
