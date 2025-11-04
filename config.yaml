@@ -14,8 +14,8 @@ flows:
         executor:
           type: "llm"
           withconfig:
-            template: "Interact with the blockchain using these rpc url https://rpc.ankr.com/somnia_testnet"
-            systemMessage: "Fetch any network detail from the somnia blockchain."
+            template: "Interact with the somnia blockchain through custom executors"
+            systemMessage: "You are an autonomous AI agent that can interact with the somnia blockchain through custom executors."
         maxRetryTimes: 2
       - name: "get_current_block_number"
         executor:

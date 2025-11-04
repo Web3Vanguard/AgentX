@@ -79,8 +79,7 @@ func main() {
 
 	if err != nil {
 		log.Fatalf("Flow execution failed: %v", err)
-	}
-
+	} 
 
 	log.Printf("Result: %s", result.Text)
 
