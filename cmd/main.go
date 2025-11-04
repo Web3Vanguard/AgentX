@@ -46,16 +46,16 @@ func init() {
 
 func main() {
 	configPath := flag.String("name", "./config.yaml", "config path string")
+	envPath := flag.String("env", ".env", "Path to environment variables")
 
-	flag.Parse()
-	configFilePath := "./"+*configPath
-
-	
-	err := godotenv.Load()
+	err := godotenv.Load(*envPath)
 
 	if err != nil {
 		log.Fatalf("Environment variables cannot be loaded: %v", err)
 	}
+	
+	flag.Parse()
+	configFilePath := "./" + *configPath
 
 
 	err = anyi.ConfigFromFile(configFilePath)
