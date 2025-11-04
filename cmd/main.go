@@ -8,9 +8,9 @@ import (
 	"github.com/joho/godotenv"
 	// "context"
 	"fmt"
-	// "log"
-
 	"log"
+	"flag"
+	// "log"
 
 	"github.com/jieliu2000/anyi"
 	"github.com/shaaibu7/AgentX/executors"
@@ -45,18 +45,12 @@ func init() {
 
 
 func main() {
-	// getGasPriceContext := &executors.GetGasPriceExecutor{}
+	configPath := flag.String("name", "./config.yaml", "config path string")
 
-	// // context := anyi.NewFlowContext("What is the current block number", "no need to remember anything..")
-	// context := flow.FlowContext{}
+	flag.Parse()
+	configFilePath := "./"+*configPath
 
-	// result, err := getGasPriceContext.Execute(&context)
-
-	// if err != nil {
-	// 	log.Fatalf("Execution failed: %v", err)
-	// }
-
-	// fmt.Printf("Result: %s\n", result.Text)
+	
 	err := godotenv.Load()
 
 	if err != nil {
@@ -64,7 +58,7 @@ func main() {
 	}
 
 
-	err = anyi.ConfigFromFile("./config.yaml")
+	err = anyi.ConfigFromFile(configFilePath)
 
 	if err != nil {
 		log.Fatalf("Failed to load config: %v", err)
