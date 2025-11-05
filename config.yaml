@@ -14,8 +14,8 @@ flows:
         executor:
           type: "llm"
           withconfig:
-            template: "Interact with the somnia blockchain through custom executors"
-            systemMessage: "You are an autonomous AI agent that can interact with the somnia blockchain through custom executors."
+            template: "Tell me more about EVM compatible chains"
+            systemMessage: "You are an autonomous AI agent, tell me more about EVM compatible chains"
         maxRetryTimes: 2
   - name: "agentic_flow_get_block_number"
     clientName: "gpt4" # Default client for the flow

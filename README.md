@@ -13,6 +13,7 @@ With a modular architecture, cross-platform support, and built-in blockchain con
 - 🤖 Deploy and manage autonomous agents
 - 🧩 Configure agents using a simple `config.yaml` file
 - 🔗 Native Somnia blockchain integration
+- Deploy Token contracts without ever touching code
 - 🛠 Extensible and modular architecture
 - 🔐 Secure and customizable agent execution
 - ⚡ Cross-platform support (Linux, macOS, Windows)
@@ -184,3 +185,15 @@ Expose AgentX as a full-fledged Golang package that developers can import and us
 
 ---
 
+
+## Contracts Addresses and TxHash of contracts deployed with AgentX
+
+### ERC20 Token Contract
+
+- Contract Address: 0x06d1b66811ee28819C1744B9a25c44db2A1a388F
+- TxHash: 0xa09fb2fb6c97579bae345736d152fd42bda35b10ab5fc69d41d7621d856bafc3
+
+### NFT Token contract:
+
+- Contract Address: 0x5532845ee301d635377606cC192954B0E5941fE5
+- TxHash: 0xcaa847bd397312d51b1c5b6e5047bae687adee77bd71d7fcd5e12e786d5d55c8
