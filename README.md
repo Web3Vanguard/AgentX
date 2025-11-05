@@ -30,9 +30,11 @@ With a modular architecture, cross-platform support, and built-in blockchain con
 
 ## 🛠 Installation
 
-- curl -fsSL https://raw.githubusercontent.com/Web3Vanguard/AgentX/main/scripts/install.sh | bash
+```
+curl -fsSL https://raw.githubusercontent.com/Web3Vanguard/AgentX/main/scripts/install.sh | bash
 
-- curl -fsSL https://raw.githubusercontent.com/Web3Vanguard/AgentX/main/scripts/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/Web3Vanguard/AgentX/main/scripts/install.sh | sudo bash
+```
 
 
 ### Prerequisites
@@ -174,6 +176,11 @@ Build multi-stage workflows that respond to blockchain events, execute logic, an
 
 ### 🔐 Secure Multi-Agent Execution  
 Run coordinated workflows between multiple agents with scoped access, wallet segregation, and enhanced encryption.
+
+
+### 📦 AgentX as a Golang SDK  
+Expose AgentX as a full-fledged Golang package that developers can import and use directly within their own Go applications. This unlocks deep integration and programmable control over agents, flows, and blockchain interactions.
+
 
 ---
 
